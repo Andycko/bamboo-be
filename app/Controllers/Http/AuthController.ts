@@ -1,11 +1,11 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import LoginValidator from 'App/Validators/LoginValidator'
+import AuthService from 'App/Services/AuthService'
 
 export default class AuthController {
   public async login({ auth, request }: HttpContextContract) {
-    const { email, password } = await request.validate(LoginValidator)
+    const payload = await request.validate(LoginValidator)
 
-    const token = await auth.use('api').attempt(email, password)
-    return token
+    return await AuthService.login(payload, auth)
   }
 }

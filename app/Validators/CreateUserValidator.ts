@@ -13,3 +13,8 @@ export default class CreateUserValidator {
 
   public messages: CustomMessages = {}
 }
+
+let validator: CreateUserValidator
+type CreateUserValidatorProps = typeof validator.schema.props
+
+export { CreateUserValidatorProps }

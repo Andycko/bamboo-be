@@ -1,13 +1,14 @@
 import User from 'App/Models/User'
 import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
+import { CreateUserValidatorProps } from 'App/Validators/CreateUserValidator'
 
 class UserService {
   public async getUser(auth: AuthContract) {
     return auth.user!.serialize()
   }
 
-  public async createUser(data: any, auth: AuthContract) {
+  public async createUser(data: CreateUserValidatorProps, auth: AuthContract) {
     let user = await User.findBy('email', data.email)
 
     if (user) {

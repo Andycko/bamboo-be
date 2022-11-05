@@ -11,3 +11,8 @@ export default class LoginValidator {
 
   public messages: CustomMessages = {}
 }
+
+let validator: LoginValidator
+type LoginValidatorProps = typeof validator.schema.props
+
+export { LoginValidatorProps }
