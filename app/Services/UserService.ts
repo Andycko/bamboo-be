@@ -9,6 +9,8 @@ import { openai } from 'Config/openai'
 import { SelectImagesValidatorProps } from 'App/Validators/SelectImagesValidator'
 import UserImage from 'App/Models/UserImages'
 import Logger from '@ioc:Adonis/Core/Logger'
+import UserHobby from 'App/Models/UserHobby'
+import { SelectHobbiesValidatorProps } from 'App/Validators/SelectHobbiesValidator'
 
 class UserService {
   public async getUser(auth: AuthContract) {
@@ -75,6 +77,19 @@ class UserService {
       ['imageId', 'userId'],
       payload.imageIds.map((id) => ({
         imageId: parseInt(id),
+        userId: auth.user!.id,
+      }))
+    )
+
+    const user = await UserRepository.findById(auth.user!.id)
+    return user!.serialize()
+  }
+
+  public async selectHobbies(payload: SelectHobbiesValidatorProps, auth: AuthContract) {
+    await UserHobby.updateOrCreateMany(
+      ['hobbyId', 'userId'],
+      payload.hobbyIds.map((id) => ({
+        hobbyId: parseInt(id),
         userId: auth.user!.id,
       }))
     )

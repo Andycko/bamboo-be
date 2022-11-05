@@ -3,6 +3,7 @@ import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UserService from 'App/Services/UserService'
 import LogFeelingValidator from 'App/Validators/LogFeelingValidator'
 import SelectImagesValidator from 'App/Validators/SelectImagesValidator'
+import SelectHobbiesValidator from 'App/Validators/SelectHobbiesValidator'
 
 export default class UsersController {
   public async index({ auth }: HttpContextContract) {
@@ -29,5 +30,11 @@ export default class UsersController {
     const payload = await request.validate(SelectImagesValidator)
 
     return await UserService.selectImages(payload, auth)
+  }
+
+  public async selectHobbies({ auth, request }: HttpContextContract) {
+    const payload = await request.validate(SelectHobbiesValidator)
+
+    return await UserService.selectHobbies(payload, auth)
   }
 }
