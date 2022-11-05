@@ -5,6 +5,7 @@ import BaseModel from 'App/Models/BaseModel'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { Deletable } from 'App/Models/Traits/Deletable'
 import Feeling from 'App/Models/Feeling'
+import Hobby from 'App/Models/Hobby'
 
 export default class User extends compose(BaseModel, Deletable) {
   @column({ isPrimary: true })
@@ -41,6 +42,13 @@ export default class User extends compose(BaseModel, Deletable) {
     pivotRelatedForeignKey: 'feelingId',
   })
   public selectedFeelings: ManyToMany<typeof Feeling>
+
+  @manyToMany(() => Hobby, {
+    pivotTable: 'UserHobbies',
+    pivotForeignKey: 'userId',
+    pivotRelatedForeignKey: 'hobbyId',
+  })
+  public hobbies: ManyToMany<typeof Hobby>
 
   // Computed properties
   @computed()
