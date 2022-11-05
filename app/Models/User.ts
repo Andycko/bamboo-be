@@ -1,9 +1,10 @@
 import { DateTime } from 'luxon'
-import { beforeSave, column, computed } from '@ioc:Adonis/Lucid/Orm'
+import { beforeSave, column, computed, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import BaseModel from 'App/Models/BaseModel'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { Deletable } from 'App/Models/Traits/Deletable'
+import Feeling from 'App/Models/Feeling'
 
 export default class User extends compose(BaseModel, Deletable) {
   @column({ isPrimary: true })
@@ -32,6 +33,14 @@ export default class User extends compose(BaseModel, Deletable) {
 
   @column.dateTime()
   public deletedAt: DateTime | null
+
+  // Relationships
+  @manyToMany(() => Feeling, {
+    pivotTable: 'UserFeelings',
+    pivotForeignKey: 'userId',
+    pivotRelatedForeignKey: 'feelingId',
+  })
+  public selectedFeelings: ManyToMany<typeof Feeling>
 
   // Computed properties
   @computed()
