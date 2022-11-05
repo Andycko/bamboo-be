@@ -18,6 +18,8 @@ import Application from '@ioc:Adonis/Core/Application'
 | defined inside the `contracts` directory.
 |
 */
+export const DriveTypes = ['s3', 'local']
+
 export default driveConfig({
   /*
   |--------------------------------------------------------------------------
