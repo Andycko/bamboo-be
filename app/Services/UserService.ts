@@ -8,6 +8,7 @@ import UserRepository from 'App/Repositories/UserRepository'
 import { openai } from 'Config/openai'
 import { SelectImagesValidatorProps } from 'App/Validators/SelectImagesValidator'
 import UserImage from 'App/Models/UserImages'
+import Logger from '@ioc:Adonis/Core/Logger'
 
 class UserService {
   public async getUser(auth: AuthContract) {
@@ -52,6 +53,8 @@ class UserService {
     }
     genKeywords.push('happy')
     genKeywords.push('cute')
+
+    Logger.info(`[UserService] Dall-e keywords: ${genKeywords}`)
 
     try {
       const response = await openai.createImage({
