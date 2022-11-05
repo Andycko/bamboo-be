@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
+import BaseModel from 'App/Models/BaseModel'
 
 export default class Feeling extends BaseModel {
   @column({ isPrimary: true })
