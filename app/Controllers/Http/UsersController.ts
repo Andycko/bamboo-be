@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UserService from 'App/Services/UserService'
 import LogFeelingValidator from 'App/Validators/LogFeelingValidator'
+import SelectImagesValidator from 'App/Validators/SelectImagesValidator'
 
 export default class UsersController {
   public async index({ auth }: HttpContextContract) {
@@ -22,5 +23,11 @@ export default class UsersController {
 
   public async getImage({ auth }: HttpContextContract) {
     return await UserService.getImage(auth)
+  }
+
+  public async selectImages({ auth, request }: HttpContextContract) {
+    const payload = await request.validate(SelectImagesValidator)
+
+    return await UserService.selectImages(payload, auth)
   }
 }

@@ -10,6 +10,7 @@ class UserRepository {
 
     query.preload('selectedFeelings')
     query.preload('hobbies')
+    query.preload('images')
     query.preload('userFeelingLogs', (query) => {
       query.orderBy('loggedAt', 'desc')
       query.preload('feeling')

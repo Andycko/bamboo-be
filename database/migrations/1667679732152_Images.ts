@@ -7,15 +7,13 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.string('drive', 10).notNullable()
+      table.string('drive', 10).defaultTo('local')
 
-      table.string('url', 255).notNullable()
+      table.string('url', 255)
 
-      table.string('path', 255).notNullable()
+      table.string('path', 255)
 
-      table.string('name', 50).notNullable()
-
-      table.text('tags').nullable()
+      table.text('tags').notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

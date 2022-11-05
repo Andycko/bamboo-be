@@ -12,13 +12,10 @@ export default class Image extends BaseModel {
   public drive: typeof DriveTypes[number]
 
   @column()
-  public url: string
+  public url: string | null
 
   @column()
-  public path: string
-
-  @column()
-  public name: string
+  public path: string | null
 
   @column()
   public tags: string

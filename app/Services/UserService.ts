@@ -6,6 +6,8 @@ import { LogFeelingValidatorProps } from 'App/Validators/LogFeelingValidator'
 import UserFeelingLog from 'App/Models/UserFeelingLog'
 import UserRepository from 'App/Repositories/UserRepository'
 import { openai } from 'Config/openai'
+import { SelectImagesValidatorProps } from 'App/Validators/SelectImagesValidator'
+import UserImage from 'App/Models/UserImages'
 
 class UserService {
   public async getUser(auth: AuthContract) {
@@ -33,7 +35,6 @@ class UserService {
     })
 
     const user = await UserRepository.findById(auth.user!.id)
-
     return user!.serialize()
   }
 
@@ -64,6 +65,19 @@ class UserService {
       console.error(err.response.data)
       throw new Error('Error generating image')
     }
+  }
+
+  public async selectImages(payload: SelectImagesValidatorProps, auth: AuthContract) {
+    await UserImage.updateOrCreateMany(
+      ['imageId', 'userId'],
+      payload.imageIds.map((id) => ({
+        imageId: parseInt(id),
+        userId: auth.user!.id,
+      }))
+    )
+
+    const user = await UserRepository.findById(auth.user!.id)
+    return user!.serialize()
   }
 }
 
