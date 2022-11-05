@@ -2,6 +2,9 @@ import User from 'App/Models/User'
 import { AuthenticationException } from '@adonisjs/auth/build/standalone'
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 import { CreateUserValidatorProps } from 'App/Validators/CreateUserValidator'
+import { LogFeelingValidatorProps } from 'App/Validators/LogFeelingValidator'
+import UserFeelingLog from 'App/Models/UserFeelingLog'
+import UserRepository from 'App/Repositories/UserRepository'
 
 class UserService {
   public async getUser(auth: AuthContract) {
@@ -19,6 +22,18 @@ class UserService {
     const token = await auth.use('api').login(user)
 
     return { user: token.user.serialize(), token: token.token }
+  }
+
+  public async logFeeling(data: LogFeelingValidatorProps, auth: AuthContract) {
+    await UserFeelingLog.create({
+      userId: auth.user!.id,
+      feelingId: parseInt(data.feelingId),
+      loggedAt: data.loggedAt,
+    })
+
+    const user = await UserRepository.findById(auth.user!.id)
+
+    return user!.serialize()
   }
 }
 

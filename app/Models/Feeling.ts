@@ -26,4 +26,11 @@ export default class Feeling extends BaseModel {
     pivotRelatedForeignKey: 'userId',
   })
   public users: ManyToMany<typeof User>
+
+  @manyToMany(() => User, {
+    pivotTable: 'UserFeelingLogs',
+    pivotForeignKey: 'feelingId',
+    pivotRelatedForeignKey: 'userId',
+  })
+  public loggedByUsers: ManyToMany<typeof User>
 }

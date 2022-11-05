@@ -1,5 +1,13 @@
 import { DateTime } from 'luxon'
-import { beforeSave, column, computed, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  beforeSave,
+  column,
+  computed,
+  hasMany,
+  HasMany,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
 import BaseModel from 'App/Models/BaseModel'
 import { compose } from '@ioc:Adonis/Core/Helpers'
@@ -7,6 +15,7 @@ import { Deletable } from 'App/Models/Traits/Deletable'
 import Feeling from 'App/Models/Feeling'
 import Hobby from 'App/Models/Hobby'
 import Image from 'App/Models/Images'
+import UserFeelingLog from 'App/Models/UserFeelingLog'
 
 export default class User extends compose(BaseModel, Deletable) {
   @column({ isPrimary: true })
@@ -44,6 +53,13 @@ export default class User extends compose(BaseModel, Deletable) {
   })
   public selectedFeelings: ManyToMany<typeof Feeling>
 
+  @manyToMany(() => Feeling, {
+    pivotTable: 'UserFeelingLogs',
+    pivotForeignKey: 'userId',
+    pivotRelatedForeignKey: 'feelingId',
+  })
+  public loggedFeelings: ManyToMany<typeof Feeling>
+
   @manyToMany(() => Hobby, {
     pivotTable: 'UserHobbies',
     pivotForeignKey: 'userId',
@@ -57,6 +73,9 @@ export default class User extends compose(BaseModel, Deletable) {
     pivotRelatedForeignKey: 'imageId',
   })
   public images: ManyToMany<typeof Image>
+
+  @hasMany(() => UserFeelingLog)
+  public userFeelingLogs: HasMany<typeof UserFeelingLog>
 
   // Computed properties
   @computed()
