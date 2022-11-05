@@ -19,7 +19,21 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import HealthCheck from '@ioc:Adonis/Core/HealthCheck'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
+import packageJson from '../../package.json'
+
+Route.get('/', async () => ({
+  app: 'Bamboo-api',
+  version: packageJson.version,
+}))
+
+Route.get('health', async ({ response }) => {
+  const report = await HealthCheck.getReport()
+
+  return report.healthy ? response.ok(report) : response.badRequest(report)
 })
+
+// Import other routes from folder
+import('./user')
+import('./auth')
