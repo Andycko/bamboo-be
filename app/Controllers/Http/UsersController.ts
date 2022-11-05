@@ -19,4 +19,8 @@ export default class UsersController {
 
     return await UserService.logFeeling(payload, auth)
   }
+
+  public async getImage({ auth }: HttpContextContract) {
+    return await UserService.getImage(auth)
+  }
 }
