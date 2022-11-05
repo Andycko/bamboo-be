@@ -12,6 +12,9 @@ export default class Image extends BaseModel {
   public drive: typeof DriveTypes[number]
 
   @column()
+  public url: string
+
+  @column()
   public path: string
 
   @column()

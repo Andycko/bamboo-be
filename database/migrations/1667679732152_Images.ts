@@ -9,6 +9,8 @@ export default class extends BaseSchema {
 
       table.string('drive', 10).notNullable()
 
+      table.string('url', 255).notNullable()
+
       table.string('path', 255).notNullable()
 
       table.string('name', 50).notNullable()
