@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { beforeSave, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import BaseModel from 'App/Models/BaseModel'
 import User from 'App/Models/User'
 
@@ -16,14 +16,14 @@ export default class Suggestion extends BaseModel {
   @column()
   public type: SuggestionType
 
-  @column()
+  @column({ serialize: (value: string) => value.split(',').map((item) => item.trim()) })
   public tags: string
 
   @column()
   public description: string
 
   @column()
-  public meta: string
+  public meta: string | Record<any, any>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -38,4 +38,12 @@ export default class Suggestion extends BaseModel {
     pivotRelatedForeignKey: 'userId',
   })
   public users: ManyToMany<typeof User>
+
+  // Functions
+  @beforeSave()
+  public static parseMeta(suggestion: Suggestion) {
+    if (typeof suggestion.meta !== 'string') {
+      suggestion.meta = JSON.stringify(suggestion.meta)
+    }
+  }
 }

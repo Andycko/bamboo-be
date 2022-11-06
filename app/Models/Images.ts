@@ -17,7 +17,7 @@ export default class Image extends BaseModel {
   @column()
   public path: string | null
 
-  @column()
+  @column({ serialize: (value: string) => value.split(',').map((item) => item.trim()) })
   public tags: string
 
   @column.dateTime({ autoCreate: true })
