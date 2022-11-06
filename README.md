@@ -9,9 +9,6 @@ Of course, we know everyone is different. So, we would have an in-app personalis
 Last but not least, our app would be easily accessible and could be recommended to vulnerable young people in order to help them manage their app use wisely and eliminate the harmful effects the use of some apps can have. We believe this would be especially useful in the time people are waiting to access therapists or even when they are saving up to be able to afford therapy sessions - because one never knows, maybe simply finding out that the way we use our phone is what stops us from feeling good.
 
 ## How would we do this?
-### MVP
-We would develop a responsive, mobile-first designed web app simulating our mobile app written in Svelte. Very basic Node.js backend using Adonis.js deployed to GCP and PSQL db to Aiwan.
-### Final product
 * Native Android application with Kotlin and JetPack Compose.
 * Native iOS application with Swift.
 * A machine learning pipeline. Production models are deployed to a set of AWS/GCP servers with load balancing running on JS Node.js and PSQL. A set of (re)training servers living on AWS/GCP running on Python Flask and PSQL.
